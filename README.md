@@ -184,6 +184,8 @@ To switch to this newly-installed version, run `chruby` followed by the version.
 chruby 2.7.2
 ```
 
+**If this doesn't work, try quitting and restarting your terminal.**
+
 Another way to automatically switch between versions is to add a `.ruby-version` file in your Ruby project with the version number prefixed with `ruby-`, such as `ruby-2.7.2`. To test that this works:
 
 1. `cd` into a folder outside of your project
