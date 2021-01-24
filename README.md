@@ -43,7 +43,7 @@ For more coding guides, scripts, and screencasts, subscribe to my [free weekly n
 
 ## Requirements
 
-**I have not yet tested Macs with the M1 chip. The script should work under Rosetta 2. If you give it a try, please let me know if it worked.**
+**I have not yet personally tested the script on Macs with the M1 chip, but others have said it worked for them both natively and with Rosetta. Let me know if you run into any issues.**
 
 Supported operating systems:
 
