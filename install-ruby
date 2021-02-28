@@ -65,6 +65,18 @@ check_processor_and_set_chruby_source_strings() {
   fi
 }
 
+configure_shell_file_for_homebrew_on_m1() {
+  if [[ $SHELL == *fish ]]; then
+    # shellcheck disable=SC2016
+    append_to_file "$shell_file" 'status --is-interactive; and eval (/opt/homebrew/bin/brew shellenv)'
+    fish -c 'eval (/opt/homebrew/bin/brew shellenv)'
+  else
+    # shellcheck disable=SC2016
+    append_to_file "$HOME/.zprofile" 'eval $(/opt/homebrew/bin/brew shellenv)'
+    eval $(/opt/homebrew/bin/brew shellenv)
+  fi
+}
+
 configure_shell_file_for_chruby() {
   if [[ ! $SHELL == *fish ]]; then
     append_to_file "$shell_file" "$chruby_source_string"
@@ -140,14 +152,9 @@ fancy_echo 'You should be and up and running with a working Ruby environment in 
 fancy_echo 'The following lines are to help me debug any issues:'
 fancy_echo "Current shell: $SHELL"
 fancy_echo "Current PATH: $PATH"
-fancy_echo "xcode-select path:"
-xcode-select -p
-fancy_echo "Ruby installed with Homebrew?"
-if brew_is_installed "ruby"; then
-  echo "yes"
-else
-  echo "no"
-fi
+# fancy_echo "xcode-select path:"
+# xcode-select -p
+
 if command -v rbenv >/dev/null; then
   fancy_echo "rbenv is installed"
 fi
@@ -157,25 +164,34 @@ fi
 if command -v asdf >/dev/null; then
   fancy_echo "asdf is installed"
 fi
+
 fancy_echo "macOS version:"
 sw_vers
+
 fancy_echo "Mac model:"
 sysctl hw.model
+
 fancy_echo "Mac CPU:"
 sysctl -n machdep.cpu.brand_string
+
 fancy_echo "CPU architecture:"
 uname -m
+
 fancy_echo "shell file contents:"
 cat $shell_file
+
+fancy_echo "gem env:"
+gem env
+fancy_echo "End of gem env."
+
 fancy_echo "End of debugging"
 
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    if [[ $SHELL == *fish ]]; then
-      # shellcheck disable=SC2016
-      append_to_file "$shell_file" 'set -g fish_user_paths "/usr/local/sbin" $fish_user_paths'
+    if apple_m1 && ! rosetta; then
+      configure_shell_file_for_homebrew_on_m1
     else
       # shellcheck disable=SC2016
       append_to_file "$shell_file" 'export PATH="/usr/local/bin:$PATH"'
@@ -183,6 +199,13 @@ if ! command -v brew >/dev/null; then
 else
   fancy_echo "Homebrew already installed. Updating Homebrew ..."
   brew update
+fi
+
+fancy_echo "Ruby installed with Homebrew?"
+if brew_is_installed "ruby"; then
+  echo "yes"
+else
+  echo "no"
 fi
 
 fancy_echo "Verifying the Homebrew installation..."
@@ -271,5 +294,7 @@ number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
 fancy_echo 'All done!'
-fancy_echo 'For more coding guides and tools, subscribe to my newsletter:'
-fancy_echo 'https://www.moncefbelyamani.com/newsletter'
+fancy_echo 'If you found this script valuable, join the 1000+ people on my list'
+echo "who are becoming confident coders:"
+fancy_echo "https://www.moncefbelyamani.com/newsletter"
+echo " "
