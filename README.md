@@ -33,12 +33,10 @@ miss or fumble a step due to human error or incomplete or outdated instructions.
 
 Read more in my [definitive guide to installing Ruby gems on a Mac](https://www.moncefbelyamani.com/the-definitive-guide-to-installing-ruby-gems-on-a-mac/).
 
-Note that this script installs the bare minimum for a working Ruby development
-environment. I also have another script called [laptop](https://github.com/monfresh/laptop)
-that installs other essentials for Rails apps, Jekyll sites, or other web development, and it's customizable. I recommend the
-`laptop` script for most people.
+## More goodies
 
-For more coding guides, scripts, and screencasts, subscribe to my [free weekly newsletter](https://www.moncefbelyamani.com/newsletter).
+- Join the 1000+ people on my list who are becoming confident coders through my [free weekly coding guides](https://www.moncefbelyamani.com/newsletter) and exclusive tutorials and courses.
+- Check out my customizable [laptop](https://github.com/monfresh/laptop) script that installs more essential development tools, as well as the Jekyll and Rails gems. I recommend the `laptop` script for most people.
 
 ## Requirements
 
