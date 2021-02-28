@@ -1,8 +1,7 @@
 # Install Ruby on macOS
 
 `install-ruby` is a script that reliably configures your Mac so you can install
-Ruby gems (like Bundler, Jekyll, Rails), and switch between multiple versions of
-Ruby.
+Ruby gems (like Bundler, Jekyll, Rails), and switch between multiple versions of Ruby.
 
 It can be run multiple times on the same machine safely. It installs, upgrades,
 or skips packages based on what is already installed on the machine.
@@ -43,8 +42,6 @@ For more coding guides, scripts, and screencasts, subscribe to my [free weekly n
 
 ## Requirements
 
-**I have not yet personally tested the script on Macs with the M1 chip, but others have said it worked for them both natively and with Rosetta. Let me know if you run into any issues.**
-
 Supported operating systems:
 
 * Big Sur (11.1)
@@ -64,6 +61,12 @@ Supported shells:
 - bash
 - fish
 - zsh
+- 
+Supported chips:
+
+- Apple Silicon M1 (native)
+- Apple Silicon M1 (with Rosetta)
+- Intel
 
 What it sets up
 ---------------
