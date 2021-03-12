@@ -307,6 +307,7 @@ number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
 fancy_echo 'All done!'
+fancy_echo 'Now make sure to quit and restart your terminal!'
 fancy_echo 'If you found this script valuable, join the 1000+ people on my list'
 echo "who are becoming confident coders:"
 fancy_echo "https://www.moncefbelyamani.com/newsletter"
