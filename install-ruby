@@ -259,6 +259,7 @@ EOF
     switch_to_ruby "2.7.2"
   else
     brew bundle --file=- <<EOF
+    brew 'git'
     brew 'chruby'
     brew 'ruby-install'
     brew 'automake'

@@ -7,42 +7,41 @@ It can be run multiple times on the same machine safely. It installs, upgrades,
 or skips packages based on what is already installed on the machine.
 
 ## Important
-If you came here from my answer on Stack Overflow, you most likely want my [laptop](https://github.com/monfresh/laptop) script instead, unless you know for sure that all you need is Ruby, and nothing else that would be needed to use Rails or Jekyll for example.
+If you came here from my answer on Stack Overflow, you most likely want my [laptop](https://github.com/monfresh/laptop) script instead, unless you know for sure that all you need is Ruby.
 
 **After running either this script or the laptop script, make sure to restart your terminal for the changes to take effect.**
 
 ## More goodies
 
-- Join the 1000+ people on my list who are becoming confident coders through my [free weekly coding guides](https://www.moncefbelyamani.com/newsletter) and exclusive tutorials and courses.
+- Join the 1200+ people on my list who are becoming confident coders through my [free weekly coding guides](https://www.moncefbelyamani.com/newsletter) and exclusive tutorials and courses.
 - Check out my customizable [laptop](https://github.com/monfresh/laptop) script that installs more essential development tools, as well as the Jekyll and Rails gems. I recommend the `laptop` script for most people.
 
 ## Requirements
 
+Supported chips:
+
+- Apple Silicon M1
+- Intel
+
 Supported operating systems:
 
-* Big Sur (11.1)
-* macOS Catalina (10.15)
-* macOS Mojave (10.14)
+* Big Sur
+* macOS Catalina
+* macOS Mojave
 
 Unsupported operating systems. Give it a shot, but I can't guarantee it will work.
 
-* macOS High Sierra (10.13)
-* macOS Sierra (10.12)
-* OS X El Capitan (10.11)
-* OS X Yosemite (10.10)
-* OS X Mavericks (10.9)
+* macOS High Sierra (10.13.x)
+* macOS Sierra (10.12.x)
+* OS X El Capitan (10.11.x)
+* OS X Yosemite (10.10.x)
+* OS X Mavericks (10.9.x)
 
 Supported shells:
 
 - bash
 - fish
 - zsh
-
-Supported chips:
-
-- Apple Silicon M1 (native)
-- Apple Silicon M1 (with Rosetta)
-- Intel
 
 What it sets up
 ---------------
@@ -61,9 +60,60 @@ What it sets up
 Install
 -------
 
-**IMPORTANT:** Before you run the script, make sure you have the latest Apple software updates installed. Check by going to System Preferences, then Software Update. If you're on Catalina, this does not mean upgrading to Big Sur, just the latest Catalina updates.
+**IMPORTANT! CHECK ALL OF THE ITEMS BELOW BEFORE RUNNING THE SCRIPT!** 
 
-**Also, please make sure to read everything on this page for caveats, troubleshooting tips, and to make sure the script worked.**
+### Your macOS software is up to date
+Before you run the script, make sure you have the latest Apple software updates installed. Check by going to System Preferences, then Software Update. If you're on Catalina, you don't have to upgrade to Big Sur, just make sure you have the latest Catalina updates.
+
+### If applicable, you have uninstalled RVM and/or rbenv
+My script is not compatible with RVM and rbenv. You need to uninstall them first.
+
+#### Uninstall RVM
+```
+rvm implode
+```
+Then delete any lines related to RVM from these files if they exist:
+- `~/.bash_profile`
+- `~/.zshrc`
+- `~/.zprofile`
+
+#### Uninstall rbenv
+Follow the instructions here: https://github.com/rbenv/rbenv#uninstalling-rbenv
+Then delete any lines related to rbenv from these files if they exist:
+- `~/.bash_profile`
+- `~/.zshrc`
+- `~/.zprofile`
+
+### Your Homebrew installation is clean
+If you already had Homebrew and/or the command line tools (or Xcode) installed,
+you'll need to make sure Homebrew is in a clean state before running my script. Running `brew doctor` should return `Your system is ready to brew.`. If not, try to fix as many of the problems as you can. Homebrew usually has great instructions for fixing problems.
+
+**If you can't solve the Homebrew problems on your own, I can help you if you run my script anyways, then [open an issue](https://github.com/monfresh/install-ruby-on-macos/issues/new) and attach the `laptop.log` file that gets saved in your Home folder.**
+
+The Homebrew issue that is the most likely to cause problems is [outdated command line tools](https://github.com/monfresh/laptop/wiki/Troubleshooting-Errors/_edit#missing-or-outdated-command-line-tools). It will say something like this when you run `brew doctor`:
+
+```
+Warning: A newer Command Line Tools release is available.
+Update them from Software Update in System Preferences or run:
+  softwareupdate --all --install --force
+
+If that doesn't show you any updates, run:
+  sudo rm -rf /Library/Developer/CommandLineTools
+  sudo xcode-select --install
+
+Alternatively, manually download them from:
+  https://developer.apple.com/download/more/.
+```
+
+To fix this, you'll need to [remove and reinstall the CLT](https://github.com/monfresh/laptop/wiki/Troubleshooting-Errors#how-to-remove-and-reinstall-the-command-line-tools).
+
+### If you are on an M1 Mac, do not use Rosetta
+Homebrew works natively on M1 Macs. Make sure to open the default Terminal application, or iTerm, or whatever app you use. Make sure it is not in Rosetta mode. Read my guide on [installing Ruby on Apple Silicon](https://www.moncefbelyamani.com/how-to-install-homebrew-and-ruby-on-a-mac-with-the-m1-apple-silicon-chip/) for more details.
+
+### Quit and relaunch Terminal after running my script
+I mention this several times in this README, as well as when the script finishes successfully, but I'll say it again. For the changes to take effect, you have to "refresh" your terminal. The best way is to quit and relaunch it.
+
+### Now on to the installation
 
 Begin by opening the `Terminal` or `iTerm` application on your Mac. The easiest
 way to open an application in macOS is to search for it via [Spotlight]. The
@@ -82,15 +132,10 @@ curl --remote-name https://raw.githubusercontent.com/monfresh/install-ruby-on-ma
 The [script](./install-ruby) itself is available in this repo for you to review
 if you want to see what it does and how it works.
 
-Note that the script will ask you to enter your macOS password at various
+Note that the script might ask you to enter your macOS password at various
 points. This is the same password that you use to log in to your Mac. The
 prompt comes from Homebrew, because it needs permissions to write to the
-`/usr/local` directory.
-
-If you
-have `rbenv` or `RVM` installed, the script will ask you to uninstall them first
-and run the script again. Look at the script output for uninstallation
-instructions.
+`/usr/local` (or `/opt/homebrew` on M1 Macs) directory.
 
 **Once the script is done, quit and relaunch Terminal.**
 
@@ -102,7 +147,7 @@ Debugging
 Your last run of the script will be saved to a file called `laptop.log` in your home
 folder. Read through it to see if you can debug the issue yourself, with the help of the [Troubleshooting Errors](https://github.com/monfresh/install-ruby-on-macos/wiki/Troubleshooting-Errors) Wiki article. If not,
 copy the entire contents of `laptop.log` into a
-[new GitHub Issue](https://github.com/monfresh/install-ruby-on-macos/issues/new) (or attach the whole log file to the issue) for me and I'll be glad to help you. If the script doesn't work for you, it's most likely a bug in my script, which I'd love to fix, so please don't hesitate to report any issues.
+[new GitHub Issue](https://github.com/monfresh/install-ruby-on-macos/issues/new) (or attach the whole log file to the issue) for me and I'll be glad to help you.
 
 How to tell if the script worked
 --------------------------------
@@ -116,7 +161,19 @@ commands:
 ruby -v
 ```
 
-This should show `ruby 3.0.0p0` or later. **If not, try quitting and relaunching Terminal.**
+This should show `ruby 2.7.2` or `ruby 3.0.0`. **If not, try quitting and relaunching Terminal.** Then try switching manually to 2.7.2:
+
+```shell
+chruby 2.7.2
+```
+
+and check the version to double check:
+
+```shell
+ruby -v
+``` 
+
+Then check where Ruby is installed:
 
 ```shell
 which ruby
@@ -125,7 +182,7 @@ which ruby
 This should point to the `.rubies` directory in your home folder. For example:
 
 ```
-/Users/monfresh/.rubies/ruby-3.0.0/bin/ruby
+/Users/monfresh/.rubies/ruby-2.7.2/bin/ruby
 ```
 
 ## How to switch between Ruby versions and install different versions
