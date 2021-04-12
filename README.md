@@ -62,7 +62,8 @@ Install
 
 **IMPORTANT! CHECK ALL OF THE ITEMS BELOW BEFORE AND AFTER RUNNING THE SCRIPT!** 
 
-- Make sure your computer meets all [prerequisites](https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/#prerequisites) first.
+### Check prerequisites
+Make sure your computer meets all [prerequisites](https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/#prerequisites) first.
 
 ### If you are on an M1 Mac, do not use Rosetta
 Homebrew works natively on M1 Macs. Make sure to open the default Terminal application, or iTerm, or whatever app you use. Make sure it is not in Rosetta mode. Read my guide on [installing Ruby on Apple Silicon](https://www.moncefbelyamani.com/how-to-install-homebrew-and-ruby-on-a-mac-with-the-m1-apple-silicon-chip/) for more details.
