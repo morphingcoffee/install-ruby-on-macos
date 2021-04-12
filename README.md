@@ -16,7 +16,7 @@ If you came here from my answer on Stack Overflow, you most likely want my [lapt
 - Join the 1200+ people on my list who are becoming confident coders through my [free weekly coding guides](https://www.moncefbelyamani.com/newsletter) and exclusive tutorials and courses.
 - Check out my customizable [laptop](https://github.com/monfresh/laptop) script that installs more essential development tools, as well as the Jekyll and Rails gems. I recommend the `laptop` script for most people.
 
-## Requirements
+## What's supported
 
 Supported chips:
 
@@ -26,8 +26,8 @@ Supported chips:
 Supported operating systems:
 
 * Big Sur
-* macOS Catalina
-* macOS Mojave
+* Catalina
+* Mojave
 
 Unsupported operating systems. Give it a shot, but I can't guarantee it will work.
 
@@ -60,52 +60,9 @@ What it sets up
 Install
 -------
 
-**IMPORTANT! CHECK ALL OF THE ITEMS BELOW BEFORE RUNNING THE SCRIPT!** 
+**IMPORTANT! CHECK ALL OF THE ITEMS BELOW BEFORE AND AFTER RUNNING THE SCRIPT!** 
 
-### Your macOS software is up to date
-Before you run the script, make sure you have the latest Apple software updates installed. Check by going to System Preferences, then Software Update. If you're on Catalina, you don't have to upgrade to Big Sur, just make sure you have the latest Catalina updates.
-
-### If applicable, you have uninstalled RVM and/or rbenv
-My script is not compatible with RVM and rbenv. You need to uninstall them first.
-
-#### Uninstall RVM
-```
-rvm implode
-```
-Then delete any lines related to RVM from these files if they exist:
-- `~/.bash_profile`
-- `~/.zshrc`
-- `~/.zprofile`
-
-#### Uninstall rbenv
-Follow the instructions here: https://github.com/rbenv/rbenv#uninstalling-rbenv
-Then delete any lines related to rbenv from these files if they exist:
-- `~/.bash_profile`
-- `~/.zshrc`
-- `~/.zprofile`
-
-### Your Homebrew installation is clean
-If you already had Homebrew and/or the command line tools (or Xcode) installed,
-you'll need to make sure Homebrew is in a clean state before running my script. Running `brew doctor` should return `Your system is ready to brew.`. If not, try to fix as many of the problems as you can. Homebrew usually has great instructions for fixing problems.
-
-**If you can't solve the Homebrew problems on your own, I can help you if you run my script anyways, then [open an issue](https://github.com/monfresh/install-ruby-on-macos/issues/new) and attach the `laptop.log` file that gets saved in your Home folder.**
-
-The Homebrew issue that is the most likely to cause problems is [outdated command line tools](https://github.com/monfresh/laptop/wiki/Troubleshooting-Errors/_edit#missing-or-outdated-command-line-tools). It will say something like this when you run `brew doctor`:
-
-```
-Warning: A newer Command Line Tools release is available.
-Update them from Software Update in System Preferences or run:
-  softwareupdate --all --install --force
-
-If that doesn't show you any updates, run:
-  sudo rm -rf /Library/Developer/CommandLineTools
-  sudo xcode-select --install
-
-Alternatively, manually download them from:
-  https://developer.apple.com/download/more/.
-```
-
-To fix this, you'll need to [remove and reinstall the CLT](https://github.com/monfresh/laptop/wiki/Troubleshooting-Errors#how-to-remove-and-reinstall-the-command-line-tools).
+- Make sure your computer meets all [prerequisites](https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/#prerequisites) first.
 
 ### If you are on an M1 Mac, do not use Rosetta
 Homebrew works natively on M1 Macs. Make sure to open the default Terminal application, or iTerm, or whatever app you use. Make sure it is not in Rosetta mode. Read my guide on [installing Ruby on Apple Silicon](https://www.moncefbelyamani.com/how-to-install-homebrew-and-ruby-on-a-mac-with-the-m1-apple-silicon-chip/) for more details.
