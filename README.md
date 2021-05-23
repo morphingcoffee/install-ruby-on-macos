@@ -13,7 +13,7 @@ If you came here from my answer on Stack Overflow, you most likely want my [lapt
 
 ## More goodies
 
-- Join the 1200+ people on my list who are becoming confident coders through my [free weekly coding guides](https://www.moncefbelyamani.com/newsletter) and exclusive tutorials and courses.
+- Join the 1300+ people on my list who are becoming confident coders through my [free weekly coding guides](https://www.moncefbelyamani.com/newsletter) and exclusive tutorials and courses.
 - Check out my customizable [laptop](https://github.com/monfresh/laptop) script that installs more essential development tools, as well as the Jekyll and Rails gems. I recommend the `laptop` script for most people.
 
 ## What's supported
@@ -66,7 +66,7 @@ Install
 Make sure your computer meets all [prerequisites](https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/#prerequisites) first.
 
 ### If you are on an M1 Mac, do not use Rosetta
-Homebrew works natively on M1 Macs. Make sure to open the default Terminal application, or iTerm, or whatever app you use. Make sure it is not in Rosetta mode. Read my guide on [installing Ruby on Apple Silicon](https://www.moncefbelyamani.com/how-to-install-homebrew-and-ruby-on-a-mac-with-the-m1-apple-silicon-chip/) for more details.
+Homebrew works natively on M1 Macs. Make sure that whatever terminal app you use is not in Rosetta mode. Read my guide on [installing Ruby on Apple Silicon](https://www.moncefbelyamani.com/how-to-install-homebrew-and-ruby-on-a-mac-with-the-m1-apple-silicon-chip/#how-to-tell-if-you-are-using-terminal-in-rosetta-mode) for more details.
 
 ### Quit and relaunch Terminal after running my script
 I mention this several times in this README, as well as when the script finishes successfully, but I'll say it again. For the changes to take effect, you have to "refresh" your terminal. The best way is to quit and relaunch it.
