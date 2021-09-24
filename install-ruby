@@ -64,6 +64,35 @@ rosetta() {
   uname -m | grep "x86_64"
 }
 
+homebrew_installed_on_m1() {
+  apple_m1 && ! rosetta && [ -d "/opt/homebrew" ]
+}
+
+homebrew_installed_on_intel() {
+  ! apple_m1 && command -v brew >/dev/null
+}
+
+install_or_update_homebrew() {
+  if homebrew_installed_on_m1 || homebrew_installed_on_intel; then
+    update_homebrew
+  else
+    install_homebrew
+  fi
+}
+
+install_homebrew() {
+  fancy_echo "Installing Homebrew ..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  configure_shell_file_for_homebrew
+}
+
+update_homebrew() {
+  fancy_echo "Homebrew already installed. Updating Homebrew ..."
+  configure_shell_file_for_homebrew
+  brew update
+}
+
 check_processor_and_set_chruby_source_strings() {
   if apple_m1 && ! rosetta; then
     chruby_source_string="source /opt/homebrew/opt/chruby/share/chruby/chruby.sh"
@@ -91,7 +120,7 @@ configure_shell_file_for_homebrew_on_m1() {
     # shellcheck disable=SC2016
     append_to_file "$HOME/.zprofile" 'eval $(/opt/homebrew/bin/brew shellenv)'
   fi
-  eval $(/opt/homebrew/bin/brew shellenv)
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 }
 
 configure_shell_file_for_chruby() {
@@ -144,7 +173,7 @@ latest_installed_ruby() {
 }
 
 ruby_2_7_2_is_installed() {
-  find "$HOME/.rubies" -maxdepth 1 -name 'ruby-2.7.2'
+  find "$HOME/.rubies" -maxdepth 1 -name 'ruby-2.7.3'
 }
 
 switch_to_ruby() {
@@ -196,6 +225,13 @@ uname -m
 
 fancy_echo "shell file contents:"
 cat $shell_file
+fancy_echo "End of shell file contents."
+
+if [ -f "$HOME/.zprofile" ]; then
+  fancy_echo ".zprofile contents:"
+  cat "$HOME/.zprofile"
+  fancy_echo "End of .zprofile contents."
+fi
 
 fancy_echo "gem env:"
 gem env
@@ -203,16 +239,7 @@ fancy_echo "End of gem env."
 
 fancy_echo "End of debugging"
 
-if ! command -v brew >/dev/null; then
-  fancy_echo "Installing Homebrew ..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-    configure_shell_file_for_homebrew
-else
-  fancy_echo "Homebrew already installed. Updating Homebrew ..."
-  configure_shell_file_for_homebrew
-  brew update
-fi
+install_or_update_homebrew
 
 fancy_echo "Ruby installed with Homebrew?"
 if brew_is_installed "ruby"; then
@@ -240,7 +267,7 @@ if command -v rbenv >/dev/null || command -v rvm >/dev/null; then
   echo "To uninstall RVM, run 'rvm implode'. To uninstall rbenv, follow the instructions here: https://github.com/rbenv/rbenv#uninstalling-rbenv"
 else
   if ! brew_is_installed "chruby"; then
-    fancy_echo 'Installing chruby, ruby-install, and the Ruby 2.7.2 ...'
+    fancy_echo 'Installing chruby, ruby-install, and the Ruby 2.7.3 ...'
 
     brew bundle --file=- <<EOF
     brew 'chruby'
@@ -250,13 +277,13 @@ else
     brew 'gdbm'
     brew 'libffi'
     brew 'libyaml'
-    brew 'openssl'
+    brew 'openssl@1.1'
     brew 'readline'
 EOF
 
-    ruby-install ruby-2.7.2 -- --with-openssl-dir="$(brew --prefix openssl)"
-    configure_shell_file_for_chruby "2.7.2"
-    switch_to_ruby "2.7.2"
+    ruby-install ruby-2.7.3 -- --with-openssl-dir="$(brew --prefix openssl@1.1)"
+    configure_shell_file_for_chruby "2.7.3"
+    switch_to_ruby "2.7.3"
   else
     brew bundle --file=- <<EOF
     brew 'git'
@@ -267,7 +294,7 @@ EOF
     brew 'gdbm'
     brew 'libffi'
     brew 'libyaml'
-    brew 'openssl'
+    brew 'openssl@1.1'
     brew 'readline'
 EOF
 
@@ -278,26 +305,26 @@ EOF
 
     if ! [ "$latest_stable_ruby" = "$(latest_installed_ruby)" ]; then
       fancy_echo "Installing latest stable Ruby version: $latest_stable_ruby"
-      ruby-install ruby -- --with-openssl-dir=$(brew --prefix openssl)
+      ruby-install ruby -- --with-openssl-dir=$(brew --prefix openssl@1.1)
       configure_shell_file_for_chruby "$(latest_installed_ruby)"
       switch_to_ruby "$(latest_installed_ruby)"
     else
       fancy_echo 'You have the latest version of Ruby'
     fi
 
-    if ! [ "$(ruby_2_7_2_is_installed)" = "$HOME/.rubies/ruby-2.7.2" ]; then
-      fancy_echo "Installing Ruby 2.7.2 ..."
-      ruby-install ruby-2.7.2 -- --with-openssl-dir="$(brew --prefix openssl)"
-      configure_shell_file_for_chruby "2.7.2"
-      switch_to_ruby "2.7.2"
+    if ! [ "$(ruby_2_7_2_is_installed)" = "$HOME/.rubies/ruby-2.7.3" ]; then
+      fancy_echo "Installing Ruby 2.7.3 ..."
+      ruby-install ruby-2.7.3 -- --with-openssl-dir="$(brew --prefix openssl@1.1)"
+      configure_shell_file_for_chruby "2.7.3"
+      switch_to_ruby "2.7.3"
     fi
 
-    configure_shell_file_for_chruby "2.7.2"
+    configure_shell_file_for_chruby "2.7.3"
   fi
 fi
 
 fancy_echo 'Updating Rubygems...'
-switch_to_ruby "2.7.2"
+switch_to_ruby "2.7.3"
 gem update --system
 
 fancy_echo 'Installing or updating Bundler'
@@ -309,7 +336,7 @@ bundle config --global jobs $((number_of_cores - 1))
 
 fancy_echo 'All done!'
 fancy_echo 'Now make sure to quit and restart your terminal!'
-fancy_echo 'If you found this script valuable, join the 1000+ people on my list'
+fancy_echo 'If you found this script valuable, join the 2000+ people on my list'
 echo "who are becoming confident coders:"
 fancy_echo "https://www.moncefbelyamani.com/newsletter"
 echo " "
