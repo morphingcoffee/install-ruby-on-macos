@@ -172,8 +172,8 @@ latest_installed_ruby() {
   find "$HOME/.rubies" -maxdepth 1 -name 'ruby-*' -print0 | sort -z | xargs -0 | grep -E -o '\d+\.\d+\.\d+' | tail -n1
 }
 
-ruby_2_7_2_is_installed() {
-  find "$HOME/.rubies" -maxdepth 1 -name 'ruby-2.7.3'
+ruby_2_7_7_is_installed() {
+  find "$HOME/.rubies" -maxdepth 1 -name 'ruby-2.7.7'
 }
 
 switch_to_ruby() {
@@ -267,7 +267,7 @@ if command -v rbenv >/dev/null || command -v rvm >/dev/null; then
   echo "To uninstall RVM, run 'rvm implode'. To uninstall rbenv, follow the instructions here: https://github.com/rbenv/rbenv#uninstalling-rbenv"
 else
   if ! brew_is_installed "chruby"; then
-    fancy_echo 'Installing chruby, ruby-install, and the Ruby 2.7.3 ...'
+    fancy_echo 'Installing chruby, ruby-install, and the Ruby 2.7.7 ...'
 
     brew bundle --file=- <<EOF
     brew 'chruby'
@@ -281,9 +281,9 @@ else
     brew 'readline'
 EOF
 
-    ruby-install ruby-2.7.3 -- --with-openssl-dir="$(brew --prefix openssl@1.1)"
-    configure_shell_file_for_chruby "2.7.3"
-    switch_to_ruby "2.7.3"
+    ruby-install ruby-2.7.7 -- --with-openssl-dir="$(brew --prefix openssl@1.1)"
+    configure_shell_file_for_chruby "2.7.7"
+    switch_to_ruby "2.7.7"
   else
     brew bundle --file=- <<EOF
     brew 'git'
@@ -312,19 +312,19 @@ EOF
       fancy_echo 'You have the latest version of Ruby'
     fi
 
-    if ! [ "$(ruby_2_7_2_is_installed)" = "$HOME/.rubies/ruby-2.7.3" ]; then
-      fancy_echo "Installing Ruby 2.7.3 ..."
-      ruby-install ruby-2.7.3 -- --with-openssl-dir="$(brew --prefix openssl@1.1)"
-      configure_shell_file_for_chruby "2.7.3"
-      switch_to_ruby "2.7.3"
+    if ! [ "$(ruby_2_7_7_is_installed)" = "$HOME/.rubies/ruby-2.7.7" ]; then
+      fancy_echo "Installing Ruby 2.7.7 ..."
+      ruby-install ruby-2.7.7 -- --with-openssl-dir="$(brew --prefix openssl@1.1)"
+      configure_shell_file_for_chruby "2.7.7"
+      switch_to_ruby "2.7.7"
     fi
 
-    configure_shell_file_for_chruby "2.7.3"
+    configure_shell_file_for_chruby "2.7.7"
   fi
 fi
 
 fancy_echo 'Updating Rubygems...'
-switch_to_ruby "2.7.3"
+switch_to_ruby "2.7.7"
 gem update --system
 
 fancy_echo 'Installing or updating Bundler'
