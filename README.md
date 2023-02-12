@@ -62,7 +62,25 @@ Install
 
 **IMPORTANT! CHECK ALL OF THE ITEMS BELOW BEFORE AND AFTER RUNNING THE SCRIPT!** 
 
-### Check prerequisites
+### Prerequisites
+
+#### chruby
+
+```bash
+brew install chruby
+```
+
+Then check messages output by `brew` & perform suggested operations if required
+
+#### ruby-install
+
+```bash
+brew install ruby-install
+```
+
+Then check messages output by `brew` & perform suggested operations if required
+
+### Check other prerequisites
 Make sure your computer meets all [prerequisites](https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/#prerequisites) first.
 
 ### If you are on an M1 Mac, do not use Rosetta
@@ -119,10 +137,10 @@ commands:
 ruby -v
 ```
 
-This should show `ruby 2.7.2` or `ruby 3.0.0`. **If not, try quitting and relaunching Terminal.** Then try switching manually to 2.7.2:
+This should show `ruby 2.7.7` or `ruby 3.0.0`. **If not, try quitting and relaunching Terminal.** Then try switching manually to 2.7.7:
 
 ```shell
-chruby 2.7.2
+chruby 2.7.7
 ```
 
 and check the version to double check:
@@ -140,29 +158,29 @@ which ruby
 This should point to the `.rubies` directory in your home folder. For example:
 
 ```
-/Users/monfresh/.rubies/ruby-2.7.2/bin/ruby
+/Users/monfresh/.rubies/ruby-2.7.7/bin/ruby
 ```
 
 ## How to switch between Ruby versions and install different versions
 
-By default, the script installs Ruby 2.7.2. If you run it again, it will also install Ruby 3.0.0. For now, if you're not an experienced Rubyist, I recommend using Ruby 2.7.2 because some gems like Jekyll aren't yet fully compatible with Ruby 3.0.0. 
+By default, the script installs Ruby 2.7.7. If you run it again, it will also install Ruby 3.0.0. For now, if you're not an experienced Rubyist, I recommend using Ruby 2.7.7 because some gems like Jekyll aren't yet fully compatible with Ruby 3.0.0. 
 
 To install an older version,
 run `ruby-install` followed by `ruby-` and the desired version. For example:
 
 ```shell
-ruby-install ruby-2.7.2
+ruby-install ruby-2.7.7
 ```
 
 To switch to this newly-installed version, run `chruby` followed by the version. For example:
 
 ```shell
-chruby 2.7.2
+chruby 2.7.7
 ```
 
 **If this doesn't work, try quitting and restarting your terminal.**
 
-Another way to automatically switch between versions is to add a `.ruby-version` file in your Ruby project with the version number prefixed with `ruby-`, such as `ruby-2.7.2`. To test that this works:
+Another way to automatically switch between versions is to add a `.ruby-version` file in your Ruby project with the version number prefixed with `ruby-`, such as `ruby-2.7.7`. To test that this works:
 
 1. `cd` into a folder outside of your project
 2. Run `chruby 3.0.0` (or some other version that is not the one specified in your `.ruby-version`)
@@ -171,7 +189,7 @@ Another way to automatically switch between versions is to add a `.ruby-version`
 5. Verify that you are using the specified version with `ruby -v`
 
 Note that gems only get installed in a specific version of Ruby. If you installed jekyll in 3.0.0,
-and then you install 2.7.2 for example, you'll have to install jekyll again in 2.7.2.
+and then you install 2.7.7 for example, you'll have to install jekyll again in 2.7.7.
 
 Why
 ---
