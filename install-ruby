@@ -56,24 +56,24 @@ create_fish_config_and_set_it_as_shell_file() {
   shell_file="$HOME/.config/fish/config.fish"
 }
 
-apple_m1() {
-  sysctl -n machdep.cpu.brand_string | grep "Apple M1"
+native() {
+  uname -m | grep "arm64"
 }
 
 rosetta() {
   uname -m | grep "x86_64"
 }
 
-homebrew_installed_on_m1() {
-  apple_m1 && ! rosetta && [ -d "/opt/homebrew" ]
+homebrew_installed_on_native() {
+  native && ! rosetta && [ -d "/opt/homebrew" ]
 }
 
 homebrew_installed_on_intel() {
-  ! apple_m1 && command -v brew >/dev/null
+  ! native && command -v brew >/dev/null
 }
 
 install_or_update_homebrew() {
-  if homebrew_installed_on_m1 || homebrew_installed_on_intel; then
+  if homebrew_installed_on_native || homebrew_installed_on_intel; then
     update_homebrew
   else
     install_homebrew
@@ -94,7 +94,7 @@ update_homebrew() {
 }
 
 check_processor_and_set_chruby_source_strings() {
-  if apple_m1 && ! rosetta; then
+  if native && ! rosetta; then
     chruby_source_string="source /opt/homebrew/opt/chruby/share/chruby/chruby.sh"
     auto_source_string="source /opt/homebrew/opt/chruby/share/chruby/auto.sh"
   else
@@ -104,15 +104,15 @@ check_processor_and_set_chruby_source_strings() {
 }
 
 configure_shell_file_for_homebrew() {
-  if apple_m1 && ! rosetta; then
-    configure_shell_file_for_homebrew_on_m1
+  if native && ! rosetta; then
+    configure_shell_file_for_homebrew_on_native
   else
     # shellcheck disable=SC2016
     append_to_file "$shell_file" 'export PATH="/usr/local/bin:$PATH"'
   fi
 }
 
-configure_shell_file_for_homebrew_on_m1() {
+configure_shell_file_for_homebrew_on_native() {
   if [[ $SHELL == *fish ]]; then
     # shellcheck disable=SC2016
     append_to_beginning_of_file "$shell_file" 'status --is-interactive; and eval (/opt/homebrew/bin/brew shellenv)'
@@ -178,7 +178,7 @@ ruby_2_7_2_is_installed() {
 
 switch_to_ruby() {
   # shellcheck disable=SC1091
-  if apple_m1 && ! rosetta; then
+  if native && ! rosetta; then
     source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
   else
     source /usr/local/share/chruby/chruby.sh
